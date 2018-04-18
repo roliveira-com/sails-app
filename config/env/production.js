@@ -73,6 +73,7 @@ module.exports = {
       // ssl: true,
 
       adapter: 'sails-mongo',
+      // url: process.env.MONGOLAB_URI,
       url: 'mongodb://heroku_8hdjrm0m:rmfourc7as5au1dsf4mam1amit@ds247449.mlab.com:47449/heroku_8hdjrm0m',
 
     },
@@ -224,7 +225,7 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     cookie: {
-      // secure: true,
+      secure: true,
       maxAge: 24 * 60 * 60 * 1000,  // 24 hours
     },
 
@@ -325,7 +326,7 @@ module.exports = {
     * (https://sailsjs.com/config/http)                                        *
     *                                                                          *
     ***************************************************************************/
-    // trustProxy: true,
+    trustProxy: true,
 
   },
 

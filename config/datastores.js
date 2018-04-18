@@ -52,13 +52,4 @@ module.exports.datastores = {
     url: 'mongodb://127.0.0.1:27017/emojis',
   },
 
-  // redis: {
-    // adapter: '@sailshq/connect-redis',
-    // url: 'redis://h:p0641194285eaca585a9f275afff2812f6457ec8616c3d100ac1f5f4cfa2079d9@ec2-34-226-156-118.compute-1.amazonaws.com:28349',
-    // host: 'ec2-34-226-156-118.compute-1.amazonaws.com',
-    // port: 28349,
-    // user: 'h',
-    // pass: 'p0641194285eaca585a9f275afff2812f6457ec8616c3d100ac1f5f4cfa2079d9',
-  // }
-
 };

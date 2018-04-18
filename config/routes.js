@@ -28,6 +28,18 @@ module.exports.routes = {
     view: 'pages/homepage'
   },
 
+  'GET /meu-perfil/:id' : {
+    controller: 'UserController',
+    action: 'findOne'
+  },
+
+  '/emoji/:id/associateuser':{
+    controller: 'EmojiController',
+    action: 'associateUser'
+  },
+
+  // '/emoji/:id/associateuser': EmojiController.associateUser,
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

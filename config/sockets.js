@@ -78,17 +78,4 @@ module.exports.sockets = {
 
   // grant3rdPartyCookie: true,
 
-  
-  /***************************************************************************
-  *                                                                          *
-  * Redis Adapter                                                            *
-  *                                                                          *
-  ***************************************************************************/
-
-  // adapter: 'redis',
-  // host: 'ec2-34-226-156-118.compute-1.amazonaws.com',
-  // port: 28349,
-  // user: 'h',
-  // pass: 'p0641194285eaca585a9f275afff2812f6457ec8616c3d100ac1f5f4cfa2079d9'
-
 };

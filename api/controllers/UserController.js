@@ -1,5 +1,5 @@
 /**
- * EmojiController
+ * UserController
  *
  * @description :: Server-side actions for handling incoming requests.
  * @help        :: See https://sailsjs.com/docs/concepts/actions
@@ -7,19 +7,19 @@
 
 module.exports = {
   
-  associateUser: function(req, res){
-    Emoji.update(
+  findOne: function(req, res){
+
+    User.findOne(
       {
         id: req.param('id')
-      },
-      {
-        owner: req.param('owner')
       }
     )
     .exec(function(err){
-      if (err) res.negotiate(err);
-      res.ok();
+      if(err) return res.negotiate(err);
+      // User.subscribe(req, user.id);
+      return res.view('profile', { user: user });
     })
+
   }
 
 };
