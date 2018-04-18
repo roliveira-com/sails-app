@@ -49,7 +49,8 @@ module.exports.datastores = {
     *                                                                          *
     ***************************************************************************/
     adapter: 'sails-mongo',
-    url: process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/emojis',
+    // url: process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/emojis',
+    url: 'mongodb://heroku_8hdjrm0m:rmfourc7as5au1dsf4mam1amit@ds247449.mlab.com:47449/heroku_8hdjrm0m',
   },
 
   // redis: {
