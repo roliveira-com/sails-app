@@ -251,7 +251,8 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     onlyAllowOrigins: [
-      'https://roliveira-sails.herokuapp.com/',
+      'https://localhost:1337',
+      'http://localhost:1337'
     ],
 
 
