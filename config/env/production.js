@@ -71,6 +71,9 @@ module.exports = {
       *                                                                           *
       ****************************************************************************/
       // ssl: true,
+      
+      adapter: 'sails-mongo',
+      url: 'mongodb://heroku_8hdjrm0m:rmfourc7as5au1dsf4mam1amit@ds247449.mlab.com:47449/heroku_8hdjrm0m',
 
     },
 
