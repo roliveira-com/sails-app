@@ -49,7 +49,7 @@ module.exports.datastores = {
     *                                                                          *
     ***************************************************************************/
     adapter: 'sails-mongo',
-    url: sails.config.custom.mongouri || 'mongodb://127.0.0.1:27017/emojis',
+    url: process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/emojis',
   },
 
   // redis: {
