@@ -71,7 +71,7 @@ module.exports = {
       *                                                                           *
       ****************************************************************************/
       // ssl: true,
-      
+
       adapter: 'sails-mongo',
       url: 'mongodb://heroku_8hdjrm0m:rmfourc7as5au1dsf4mam1amit@ds247449.mlab.com:47449/heroku_8hdjrm0m',
 
@@ -253,10 +253,10 @@ module.exports = {
     * > Be sure to use the right protocol!  ("http://" vs. "https://")         *
     *                                                                          *
     ***************************************************************************/
-    onlyAllowOrigins: [
-      'https://localhost',
-      'http://localhost'
-    ],
+    // onlyAllowOrigins: [
+    //   'https://localhost',
+    //   'http://localhost'
+    // ],
 
 
     /***************************************************************************
