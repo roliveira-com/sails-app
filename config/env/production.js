@@ -373,6 +373,7 @@ module.exports = {
   custom: {
     baseUrl: 'https://example.com',
     internalEmailAddress: 'support@example.com',
+    mongouri: 'mongodb://heroku_8hdjrm0m:rmfourc7as5au1dsf4mam1amit@ds247449.mlab.com:47449/heroku_8hdjrm0m'
 
     // mailgunDomain: 'mg.example.com',
     // mailgunSecret: 'key-prod_fake_bd32301385130a0bafe030c',
