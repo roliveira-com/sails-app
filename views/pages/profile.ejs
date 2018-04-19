@@ -4,9 +4,16 @@
     <!-- <li ng-repeat="emoji in emojis">
       <span>{{emoji.text}}</span>
     </li> -->
-    <% _.each(emojis, function(emoji){ %>
-      <li><%= emoji.text %></li>
-    <%})%>
+      <% _.each(emojis, function(emoji){ %>
+        <li><%= emoji.text %></li>
+      <%})%>
   </ul>
 
+  <% if(!req.session.me) { %>
+    <a href="<%= twitterLoginUrl %>"> Login com o Twitter </a>
+  <% } %>
+
+  <% if(req.session.me) { %>
+    <p>Logado como: <%= req.session.me.screenName %></a>
+  <% } %>
 </div>

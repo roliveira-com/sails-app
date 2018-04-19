@@ -29,54 +29,39 @@ module.exports = {
   findByNickName: function(req, res){
     
     var twitterLoginUrl;
-
-    User.findOne({
-      nickname: req.param('nickname')
-    }).exec(function(err, user){
-      if(err) return res.negotiate(err);
-      
-      if(!user) return res.notFound();
-        Emoji.find({
-          owner: user.id
-        }).exec(function(err,emojis){
-          // User.subscribe(req, user.id);
-          // return res.json(user);
-          return res.view('pages/profile', { 
-            user: user,
-            emojis: emojis,
-            twitterLoginUrl: twitterLoginUrl,
-          });        
-        })
-    }) 
     
-    // var Twitter = require('machinepack-twitter');   
-    // Twitter.getLoginUrl({   
-    //   consumerKey: 'xxx',  
-    //   consumerSecret: 'xxx',   
-    //   callbackUrl: 'http://localhost:1337/twitter', 
-    // }).exec(function(err, twitterLoginUrl){
-    //   console.log(err);
-    //   if (!err) return res.json({err: err});
+    var Twitter = require('machinepack-twitter');   
+    Twitter.getLoginUrl({   
+      consumerKey: sails.config.twitterConsumerKey,  
+      consumerSecret: sails.config.twitterConsumerSecret,   
+      callbackUrl: sails.config.twitterCallbackUrl, 
+    }).exec(function(err, twitterLoginUrl){
 
-    //   User.findOne({
-    //     nickname: req.param('nickname')
-    //   }).exec(function(err, user){
-    //     if(err) return res.negotiate(err);
-        
-    //     if(!user) return res.notFound();
-    //       Emoji.find({
-    //         owner: user.id
-    //       }).exec(function(err,emojis){
-    //         // User.subscribe(req, user.id);
-    //         // return res.json(user);
-    //         return res.view('pages/profile', { 
-    //           user: user,
-    //           emojis: emojis,
-    //           twitterLoginUrl: twitterLoginUrl,
-    //         });        
-    //       })
-    //   }) 
-    // });    
+      if(twitterLoginUrl){
+        User.findOne({
+          nickname: req.param('nickname')
+        }).exec(function(err, user){
+          if(err) return res.negotiate(err);
+          
+          if(!user) return res.notFound();
+            Emoji.find({
+              owner: user.id
+            }).exec(function(err,emojis){
+              // User.subscribe(req, user.id);
+              // return res.json(user);
+              req.session.user = user
+              return res.view('pages/profile', { 
+                user: user,
+                emojis: emojis,
+                twitterLoginUrl: twitterLoginUrl,
+              });        
+            })
+        }) 
+
+      }else{
+        return res.view('404');
+      }
+    });    
   }
 
 };
