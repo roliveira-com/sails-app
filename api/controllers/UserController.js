@@ -51,8 +51,8 @@ module.exports = {
     
     // var Twitter = require('machinepack-twitter');   
     // Twitter.getLoginUrl({   
-    //   consumerKey: 'eJDAS8s4s7dCrkxrbiBWKDkKa',  
-    //   consumerSecret: 'BT9Ul8uxWy4qMijhhqI8Mr5lZCKEBAAgtahNbgIYYyQUpwJI6R',   
+    //   consumerKey: 'xxx',  
+    //   consumerSecret: 'xxx',   
     //   callbackUrl: 'http://localhost:1337/twitter', 
     // }).exec(function(err, twitterLoginUrl){
     //   console.log(err);

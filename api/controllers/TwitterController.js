@@ -14,15 +14,15 @@ module.exports = {
     Twitter.getAccessToken({
       oauthToken: req.param('oauth_token'),     
       oauthVerifier: req.param('oauth_verifier'),
-      consumerKey: 'eJDAS8s4s7dCrkxrbiBWKDkKa',  
-      consumerSecret: 'BT9Ul8uxWy4qMijhhqI8Mr5lZCKEBAAgtahNbgIYYyQUpwJI6R',
+      consumerKey: 'xxx',  
+      consumerSecret: 'xxx',
     }).exec(function(err, acessTokenMetadata){
       if (err) return res.negotiate(err);
 
       Twitter.getUserProfile({
         screenName: acessTokenMetadata.screenName,        
-        consumerKey: 'eJDAS8s4s7dCrkxrbiBWKDkKa',  
-        consumerSecret: 'BT9Ul8uxWy4qMijhhqI8Mr5lZCKEBAAgtahNbgIYYyQUpwJI6R',        
+        consumerKey: 'xxx',  
+        consumerSecret: 'xxx',        
         accessToken: acessTokenMetadata.accessToken,        
         accessSecret: acessTokenMetadata.accessSecret,        
   
