@@ -15,7 +15,7 @@ module.exports.routes = {
   //  ║║║║╣ ╠╩╗╠═╝╠═╣║ ╦║╣ ╚═╗
   //  ╚╩╝╚═╝╚═╝╩  ╩ ╩╚═╝╚═╝╚═╝
 
-  /***************************************************************************
+  /************************************************ ***************************
   *                                                                          *
   * Make the view located at `views/homepage.ejs` your home page.            *
   *                                                                          *
@@ -28,17 +28,38 @@ module.exports.routes = {
     view: 'pages/homepage'
   },
 
-  'GET /meu-perfil/:id' : {
-    controller: 'UserController',
-    action: 'findOne'
-  },
+  'GET /user/me': 'UserController.whoami',
 
-  '/emoji/:id/associateuser':{
-    controller: 'EmojiController',
-    action: 'associateUser'
-  },
+  '/profile/:nickname' : 'UserController.findByNickName',
 
-  // '/emoji/:id/associateuser': EmojiController.associateUser,
+  '/emoji/:id/associateuser': 'EmojiController.associateUser',
+
+  '/twitter': 'TwitterController.handleLogin',
+
+  // '/emoji/:id/associateuser':{
+  //   controller: 'EmojiController',
+  //   action: 'associateUser'
+  // },
+
+  // '/emojis': {
+  //   controller: 'EmojiController',
+  //   action: 'findAll'
+  // },
+
+  // '/user': {
+  //   controller: 'UserController',
+  //   action: 'findAll'
+  // },
+
+  // 'GET /meu-perfil/:id' : {
+  //   controller: 'UserController',
+  //   action: 'findOne'
+  // },
+
+  // '/:nickname' : {
+  //   controller: 'UserController',
+  //   action: 'findByNickName'
+  // },
 
   /***************************************************************************
   *                                                                          *
@@ -50,22 +71,5 @@ module.exports.routes = {
   * not match any of those, it is matched against static assets.             *
   *                                                                          *
   ***************************************************************************/
-
-
-  //  ╔═╗╔═╗╦  ╔═╗╔╗╔╔╦╗╔═╗╔═╗╦╔╗╔╔╦╗╔═╗
-  //  ╠═╣╠═╝║  ║╣ ║║║ ║║╠═╝║ ║║║║║ ║ ╚═╗
-  //  ╩ ╩╩  ╩  ╚═╝╝╚╝═╩╝╩  ╚═╝╩╝╚╝ ╩ ╚═╝
-
-
-
-  //  ╦ ╦╔═╗╔╗ ╦ ╦╔═╗╔═╗╦╔═╔═╗
-  //  ║║║║╣ ╠╩╗╠═╣║ ║║ ║╠╩╗╚═╗
-  //  ╚╩╝╚═╝╚═╝╩ ╩╚═╝╚═╝╩ ╩╚═╝
-
-
-  //  ╔╦╗╦╔═╗╔═╗
-  //  ║║║║╚═╗║
-  //  ╩ ╩╩╚═╝╚═╝
-
 
 };

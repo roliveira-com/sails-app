@@ -18,7 +18,7 @@ module.exports = {
     )
     .exec(function(err){
       if (err) res.negotiate(err);
-      res.ok();
+      return res.ok();
     })
   }
 

@@ -6,20 +6,77 @@
  */
 
 module.exports = {
+
+  whoami: function(req, res){
+    return res.json({
+      me : req.session.me
+    });
+  },
   
-  findOne: function(req, res){
+  // findAll: function(req, res){
 
-    User.findOne(
-      {
-        id: req.param('id')
-      }
-    )
-    .exec(function(err){
+  //   User.find(
+  //     {}
+  //   )
+  //   .exec(function(err, user){
+  //     if(err) return res.negotiate(err);
+  //     User.subscribe(req, user.id);
+  //     return res.json(user);
+  //   })
+
+  // },
+
+  findByNickName: function(req, res){
+    
+    var twitterLoginUrl;
+
+    User.findOne({
+      nickname: req.param('nickname')
+    }).exec(function(err, user){
       if(err) return res.negotiate(err);
-      // User.subscribe(req, user.id);
-      return res.view('profile', { user: user });
-    })
+      
+      if(!user) return res.notFound();
+        Emoji.find({
+          owner: user.id
+        }).exec(function(err,emojis){
+          // User.subscribe(req, user.id);
+          // return res.json(user);
+          return res.view('pages/profile', { 
+            user: user,
+            emojis: emojis,
+            twitterLoginUrl: twitterLoginUrl,
+          });        
+        })
+    }) 
+    
+    // var Twitter = require('machinepack-twitter');   
+    // Twitter.getLoginUrl({   
+    //   consumerKey: 'eJDAS8s4s7dCrkxrbiBWKDkKa',  
+    //   consumerSecret: 'BT9Ul8uxWy4qMijhhqI8Mr5lZCKEBAAgtahNbgIYYyQUpwJI6R',   
+    //   callbackUrl: 'http://localhost:1337/twitter', 
+    // }).exec(function(err, twitterLoginUrl){
+    //   console.log(err);
+    //   if (!err) return res.json({err: err});
 
+    //   User.findOne({
+    //     nickname: req.param('nickname')
+    //   }).exec(function(err, user){
+    //     if(err) return res.negotiate(err);
+        
+    //     if(!user) return res.notFound();
+    //       Emoji.find({
+    //         owner: user.id
+    //       }).exec(function(err,emojis){
+    //         // User.subscribe(req, user.id);
+    //         // return res.json(user);
+    //         return res.view('pages/profile', { 
+    //           user: user,
+    //           emojis: emojis,
+    //           twitterLoginUrl: twitterLoginUrl,
+    //         });        
+    //       })
+    //   }) 
+    // });    
   }
 
 };

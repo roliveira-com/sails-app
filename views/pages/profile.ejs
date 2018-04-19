@@ -1,8 +1,12 @@
-<div ng-app="sailsapp" ng-controller="baseCtrl">
-  <h1>Sails.js</h1>
+<div>
+  <h1><%= user.name %></h1>
   <ul>
-    <li ng-repeat="emoji in emojis">
+    <!-- <li ng-repeat="emoji in emojis">
       <span>{{emoji.text}}</span>
-    </li>
+    </li> -->
+    <% _.each(emojis, function(emoji){ %>
+      <li><%= emoji.text %></li>
+    <%})%>
   </ul>
+
 </div>
