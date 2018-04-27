@@ -1,19 +1,32 @@
 <div>
   <h1><%= user.name %></h1>
   <ul>
-    <!-- <li ng-repeat="emoji in emojis">
-      <span>{{emoji.text}}</span>
-    </li> -->
-      <% _.each(emojis, function(emoji){ %>
-        <li><%= emoji.text %></li>
+      <% _.each(notes, function(note){ %>
+        <li><%= note.text %></li>
       <%})%>
   </ul>
 
-  <% if(!req.session.me) { %>
+  <% if(!req.session.user.twitter) { %>
     <a href="<%= twitterLoginUrl %>"> Login com o Twitter </a>
   <% } %>
 
-  <% if(req.session.me) { %>
-    <p>Logado como: <%= req.session.me.screenName %></a>
+  <% if(req.session.user.twitter) { %>
+    <hr>
+    <form action="/create/note" method="POST">
+      <input type="text" name="text" placeholder="digite aqui o texto">
+      <button>Cadastrar</button>
+    </form>
+    <hr>
+  <% } %>
+
+  <% if(req.session.user.twitter) { %>
+    <p>Logado como: <%= req.session.user.twitter.screenName %> | <a href="/logout">deslogar</a></p>
+    <div>
+      <code>
+        <strong>User Id: </strong><%= req.session.twitterToken.userId %><br />
+        <strong>Access Token: </strong><%= req.session.twitterToken.accessToken %><br />
+        <strong>Access Secret: </strong><%= req.session.twitterToken.accessSecret %>
+      </code>
+    </div>
   <% } %>
 </div>

@@ -6,33 +6,20 @@
  */
 
 module.exports = {
-  
-  associateUser: function(req, res){
-    Emoji.update(
-      {
-        id: req.param('id')
-      },
-      {
-        owner: req.param('owner')
-      }
-    )
-    .exec(function(err){
-      if (err) res.negotiate(err);
-      return res.ok();
-    })
-  },
 
-  createEmoji: function(req, res){
+  createNote: function(req, res){
 
     if (req.session.user) {
-      Emoji.create(
+      Notes.create(
         {
           text: req.body.text,
           owner: req.session.user.id
         }
       )
-      .exec(function(err){
+      .fetch()
+      .exec(function(err, data){
         if (err) throw err;
+        sails.sockets.blast('notes', sails.helpers.createdEventPayload(data))
         res.redirect('/profile/'+req.session.user.nickname)
       })
     } else {

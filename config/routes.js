@@ -36,6 +36,12 @@ module.exports.routes = {
 
   '/twitter': 'TwitterController.handleLogin',
 
+  '/logout': 'UserController.userLogout',
+
+  'POST /create/emoji': 'EmojiController.createEmoji',
+
+  'POST /create/note': 'NotesController.createNote'
+
   // '/emoji/:id/associateuser':{
   //   controller: 'EmojiController',
   //   action: 'associateUser'

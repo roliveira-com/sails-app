@@ -1,8 +1,10 @@
 <div ng-app="sailsapp" ng-controller="baseCtrl">
-  <h1>Sails.js</h1>
+  <h1>Notes</h1>
+  <p>powered by Sails.js</p>
+  <hr>
   <ul>
-    <li ng-repeat="emoji in emojis">
-      <span>{{emoji.text}}</span>
+    <li ng-repeat="note in notes">
+      <span>{{note.text}}</span>
     </li>
   </ul>
 </div>

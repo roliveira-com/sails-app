@@ -9,7 +9,7 @@ module.exports = {
 
   whoami: function(req, res){
     return res.json({
-      me : req.session.me
+      userSession : req.session.user
     });
   },
   
@@ -30,38 +30,57 @@ module.exports = {
     
     var twitterLoginUrl;
     
-    var Twitter = require('machinepack-twitter');   
-    Twitter.getLoginUrl({   
-      consumerKey: sails.config.twitterConsumerKey,  
-      consumerSecret: sails.config.twitterConsumerSecret,   
-      callbackUrl: sails.config.twitterCallbackUrl, 
-    }).exec(function(err, twitterLoginUrl){
+    var Twitter = require('machinepack-twitter');
+    
+    if(req.session.user){
 
-      if(twitterLoginUrl){
+      Twitter.getUserProfile(sails.helpers.setupProfileCredentials(req))      
+      .exec(function(err, twitterData){
+        req.session.user.twitter = twitterData;
+  
+        Notes.find({ owner: req.session.user.id })
+        .exec(function(err,notes){
+          return res.view('pages/profile', { 
+            notes: notes,
+            user: req.session.user
+          });        
+        })
+
+      }); 
+
+    } else {
+
+      Twitter.getLoginUrl(sails.helpers.setupLoginUrlCredentials())
+      .exec(function(err, twitterLoginUrl){
+  
         User.findOne({
           nickname: req.param('nickname')
         }).exec(function(err, user){
           if(err) return res.negotiate(err);
           
           if(!user) return res.notFound();
-            Emoji.find({
+            Notes.find({
               owner: user.id
-            }).exec(function(err,emojis){
-              // User.subscribe(req, user.id);
-              // return res.json(user);
+            }).exec(function(err,notes){
               req.session.user = user
               return res.view('pages/profile', { 
                 user: user,
-                emojis: emojis,
+                notes: notes,
                 twitterLoginUrl: twitterLoginUrl,
               });        
             })
         }) 
 
-      }else{
-        return res.view('404');
-      }
-    });    
+      }); 
+
+    }
+       
+  },
+
+  userLogout : function(req, res){
+    req.session.user = undefined;
+    req.session.twitterToken = undefined;
+    return res.redirect('/');
   }
 
 };

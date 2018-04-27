@@ -8,8 +8,8 @@ angular.module('sailsapp').controller('baseCtrl', ['$scope','$http', function($s
   //   console.log(err)
   // })
 
-  io.socket.get('/emoji', function(data){
-    $scope.emojis = data;
+  io.socket.get('/notes', function(data){
+    $scope.notes = data;
     $scope.$apply();
   })
 
@@ -17,17 +17,18 @@ angular.module('sailsapp').controller('baseCtrl', ['$scope','$http', function($s
 
   }
 
-  io.socket.on('emoji', function(event){
+  io.socket.on('notes', function(event){
+    console.log(event);
     switch (event.verb){
       case 'created':
-        $scope.emojis.push(event.data);
+        $scope.notes.push(event.data);
         $scope.$apply();
         break;
       case 'destroyed':
-        var deleted = $scope.emojis.findIndex(function(element, index, array){
+        var deleted = $scope.notes.findIndex(function(element, index, array){
           if(element.id === event.previous.id) return element;
         });
-        $scope.emojis.splice(deleted, 1);
+        $scope.notes.splice(deleted, 1);
         $scope.$apply()
         break;
     }
