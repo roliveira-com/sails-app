@@ -28,6 +28,10 @@ module.exports.routes = {
     view: 'pages/homepage'
   },
 
+  'GET /tasks': {
+    view: 'pages/tasks/home'
+  },
+
   'GET /user/me': 'UserController.whoami',
 
   '/profile/:nickname' : 'UserController.findByNickName',

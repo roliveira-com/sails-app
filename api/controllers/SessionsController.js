@@ -20,6 +20,10 @@ const oauth = new OAuth(
 
 module.exports = {
 
+  home: function (req, res) {
+    return res.view('pages/tasks/home'); 
+  },
+
   login: function(req, res){
     req.session.oauth_secrets = {};
     oauth.getOAuthRequestToken(function(error, token, tokenSecret, results){
