@@ -21,14 +21,14 @@ const oauth = new OAuth(
 module.exports = {
 
   home: function (req, res) {
-    return res.view('pages/tasks/home'); 
+    res.view('pages/tasks/home'); 
   },
 
   login: function(req, res){
     req.session.oauth_secrets = {};
     oauth.getOAuthRequestToken(function(error, token, tokenSecret, results){
       req.session.oauth_secrets[token] = tokenSecret;
-      response.redirect(`${sails.config.trelloAuthorizeURL}?oauth_token=${token}&name=${sails.config.trelloAppName}`);
+      res.redirect(`${sails.config.trelloAuthorizeURL}?scope=read,write,account&oauth_token=${token}&name=${sails.config.trelloAppName}`);
     });
   },
 
@@ -38,10 +38,50 @@ module.exports = {
     const tokenSecret = req.session.oauth_secrets[token];
     const verifier = query.oauth_verifier;
     oauth.getOAuthAccessToken(token, tokenSecret, verifier, function(error, accessToken, accessTokenSecret, results){
-      // In a real app, the accessToken and accessTokenSecret should be stored
+      if (error) sails.log('ERRO no getOAuthToken', error);
       oauth.getProtectedResource("https://api.trello.com/1/members/me", "GET", accessToken, accessTokenSecret, function(error, data, response){
-        // Now we can respond with data to show that we have access to your Trello account via OAuth
-        res.send(data)
+        if(error) sails.log('ERRO no getProtectedResource', error);
+        const userData = JSON.parse(data);
+        Workers.create({
+          trello_id: userData.id,
+          avatar_url: userData.avatarUrl || 'not specified',
+          full_name: userData.fullName,
+          initials: userData.initials,
+          user_url: userData.url,
+          username: userData.username,
+          email: userData.email  || 'not specified',
+          id_boards: userData.idBoards,
+          id_organizations: userData.idOrganizations
+        })
+        .fetch()
+        .exec(function(err, user){
+          if(err) sails.log('ERRO ao gravar usuário', err);
+          req.session.user = user
+          Sessions.create({
+            oauth: {
+              accessToken: accessToken,
+              accessTokenSecret: accessTokenSecret
+            },
+            owner: user.id
+          })
+          .fetch()
+          .exec(function(err, session){
+            Workers.update(
+              {
+                id: req.session.user.id,
+              },
+              {
+                sessions : session.id
+              }
+            )
+            .fetch()
+            .exec(function(err, updatedUser){
+              if(err) sails.log('ERRO ao gravar sessão no usuário', err);
+              req.session.user = updatedUser[0]
+              res.redirect('/tasks');
+            })
+          })
+        })
       });
     });
   }

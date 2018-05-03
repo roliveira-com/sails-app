@@ -32,6 +32,17 @@ module.exports.routes = {
     view: 'pages/tasks/home'
   },
 
+  // '/tasks' : 'SessionController.home',
+
+  // '/tasks/login': {
+  //   controller: SessionController,
+  //   action: login,
+  // },
+
+  '/tasks/login' : 'SessionsController.login',
+
+  '/tasks/callback': 'SessionsController.callback',
+
   'GET /user/me': 'UserController.whoami',
 
   '/profile/:nickname' : 'UserController.findByNickName',
