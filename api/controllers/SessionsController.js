@@ -21,7 +21,17 @@ const oauth = new OAuth(
 module.exports = {
 
   home: function (req, res) {
-    res.view('pages/tasks/home'); 
+    if(req.session.user){
+      res.view('pages/tasks/home'); 
+    } else {
+      Workers.find({trello_id : req.session.user.trello_id})
+      .exec(function (err, worker) {
+        if(err) sails.log(err);
+        if(worker.length > 0){
+          req.session.user = worker;
+        }
+      })
+    } 
   },
 
   login: function(req, res){
@@ -66,6 +76,7 @@ module.exports = {
           })
           .fetch()
           .exec(function(err, session){
+            if (err) sails.log('ERRO ao gravar sessão', err);
             Workers.update(
               {
                 id: req.session.user.id,
